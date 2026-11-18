@@ -2,13 +2,13 @@
 
 A cute and aesthetic weather forecasting web application built using Java and Spring Boot.
 
-### 🌸 Live Demo
+### Live Demo
 
 **[Visit WeatherNow](https://weathernow-18qx.onrender.com)**
 
 Search for any city and explore its current weather and 5-day forecast.
 
-### ✨ Features
+### Features
 
 - Search weather by city name.
 - View current temperature.
@@ -18,7 +18,7 @@ Search for any city and explore its current weather and 5-day forecast.
 - Dynamic weather icons.
 - Responsive and aesthetic user interface.
 
-### 🛠️ Tech Stack
+### Tech Stack
 
 **Backend**
 - Java
@@ -40,7 +40,7 @@ Search for any city and explore its current weather and 5-day forecast.
 - Git
 - GitHub
 
-### 🚀 Run Locally
+### Run Locally
 
 1. Clone the repository:
 
@@ -84,10 +84,10 @@ Get your API key from OpenWeatherMap.
 
 ### 👩‍💻 Developer
 
-**Shubha Sinha**
+**Shubha**
 
 B.Tech Computer Science Engineering Student
 
 ---
 
-Made with Java, curiosity and a little love for the weather. ☁️💜
+Made with Java, curiosity and a little love for the weather. 
