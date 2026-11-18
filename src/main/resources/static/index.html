@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherNow</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+
+<body>
+    <div class="background-decoration">
+        <span class="bg-star">✦</span>
+        <span class="bg-star">✧</span>
+        <span class="bg-star">✦</span>
+        <span class="bg-star">⋆</span>
+        <span class="bg-star">✧</span>
+        <span class="bg-star">♡</span>
+        <span class="bg-star">✦</span>
+
+        <span class="bg-cloud">☁</span>
+        <span class="bg-cloud">☁</span>
+        <span class="bg-cloud">☁</span>
+        <span class="bg-cloud">☁</span>
+
+        <span class="bg-flower">✿</span>
+        <span class="bg-flower">❀</span>
+        <span class="bg-flower">✿</span>
+        <span class="bg-flower">❀</span>
+
+        <span class="bg-butterfly">🦋</span>
+        <span class="bg-butterfly">🦋</span>
+        <span class="bg-butterfly">🦋</span>
+
+        <span class="bg-bubble"></span>
+        <span class="bg-bubble"></span>
+        <span class="bg-bubble"></span>
+
+        <!-- Floating hearts -->
+        <span class="decoration-heart heart1">♡</span>
+        <span class="decoration-heart heart2">♡</span>
+        <span class="decoration-heart heart3">♡</span>
+
+        <!-- Falling petals -->
+        <span class="decoration-petal petal1">❀</span>
+        <span class="decoration-petal petal2">✿</span>
+        <span class="decoration-petal petal3">❋</span>
+        <span class="decoration-petal petal4">❀</span>
+        <span class="decoration-petal petal5">✿</span>
+
+        <!-- Tiny sparkles -->
+        <span class="tiny-sparkle sparkle1">✧</span>
+        <span class="tiny-sparkle sparkle2">✦</span>
+        <span class="tiny-sparkle sparkle3">✧</span>
+        <span class="tiny-sparkle sparkle4">✦</span>
+        <span class="tiny-sparkle sparkle5">⋆</span>
+        <span class="tiny-sparkle sparkle6">✧</span>
+
+        <!-- Light trails -->
+        <span class="light-trail trail1"></span>
+        <span class="light-trail trail2"></span>
+</div>
+    
+    <main class="container">
+
+        <header>
+            <div class="logo">☀ WeatherNow</div>
+            <p class="tagline">A little sunshine, wherever you are ♡</p>
+        </header>
+
+        <section class="search-section">
+
+            <h1>How's the sky today?</h1>
+            <p class="subtitle">Find out what's happening outside.</p>
+
+            <div class="search-box">
+                <input type="text" id="cityInput" placeholder="Enter your city...">
+                <button onclick="getWeather()">Search ✧</button>
+            </div>
+
+            <div class="quick-cities">
+                <span>Explore the world 🌎</span>
+                <p>Search cities like Paris, Tokyo, London, New York, Dubai...</p>
+            </div>
+
+        </section>
+
+        <section class="weather-card">
+
+            <div class="weather-heading">
+                <div>
+                    <p class="small-label">CURRENT WEATHER</p>
+                    <h2 id="cityName">Your City</h2>
+                </div>
+
+                <div class="sun-icon" id="weatherIcon">☀️</div>
+            </div>
+
+            <div class="temperature">
+                <span id="temperature">--</span>
+                <span class="degree">°C</span>
+            </div>
+
+            <p id="description" class="weather-description">
+                Your weather will appear here
+            </p>
+
+            <div class="weather-details">
+
+                <div class="detail-box">
+                    <span>💧</span>
+                    <p>Humidity</p>
+                    <h3 id="humidity">--%</h3>
+                </div>
+
+                <div class="detail-box">
+                    <span>🌡️</span>
+                    <p>Temperature</p>
+                    <h3 id="tempDetail">--°C</h3>
+                </div>
+
+                <div class="detail-box">
+                    <span>☁️</span>
+                    <p>Conditions</p>
+                    <h3 id="condition">--</h3>
+                </div>
+
+                <div class="detail-box">
+                    <span>🌡️</span>
+                    <p>Feels Like</p>
+                    <h3 id="feelsLike">--°C</h3>
+                </div>
+
+                <div class="detail-box">
+                    <span>💨</span>
+                    <p>Wind Speed</p>
+                    <h3 id="windSpeed">-- m/s</h3>
+                </div>
+
+            </div>
+
+            <p class="footer-text">Made with a little sunshine ♡</p>
+
+        </section>
+
+        <section class="forecast-section">
+            <h2>☁️ 5-Day Forecast</h2>
+
+            <div class="forecast-container" id="forecastContainer">
+                <!-- Forecast cards will appear here -->
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+    function selectCity(city) {
+        document.getElementById("cityInput").value = city;
+        getWeather();
+    }
+
+    async function getWeather() {
+
+        const city = document.getElementById("cityInput").value.trim();
+
+        if (city === "") {
+            alert("Please enter a city name!");
+            return;
+        }
+
+        try {
+            const response = await fetch(`/weather?city=${encodeURIComponent(city)}`);
+
+            if (!response.ok) {
+                throw new Error("City not found!");
+            }
+
+            const data = await response.json();
+
+            document.getElementById("cityName").innerText = data.city;
+            document.getElementById("temperature").innerText = Math.round(data.temperature);
+            document.getElementById("humidity").innerText = data.humidity + "%";
+            document.getElementById("tempDetail").innerText = Math.round(data.temperature) + "°C";
+            document.getElementById("description").innerText = data.description;
+            document.getElementById("condition").innerText = data.description;
+            document.getElementById("feelsLike").innerText = Math.round(data.feelsLike) + "°C";
+            document.getElementById("windSpeed").innerText = data.windSpeed + " m/s";
+            
+            const description = data.description.toLowerCase();
+
+            let icon = "🌤️";
+
+            if (description.includes("clear")) {
+                icon = "☀️";
+            }
+            else if (description.includes("cloud")) {
+                icon = "☁️";
+            }
+            else if (description.includes("rain") || description.includes("drizzle")) {
+                icon = "🌧️";
+            }
+            else if (description.includes("thunderstorm")) {
+                icon = "⛈️";
+            }
+            else if (description.includes("snow")) {
+                icon = "❄️";
+            }
+            else if (description.includes("mist") || description.includes("fog") || description.includes("haze")) {
+                icon = "🌫️";
+            }
+
+            document.getElementById("weatherIcon").innerText = icon;
+            getForecast(city);
+        } catch (error) {
+            alert("Unable to find this city. Please try another city.");
+        }
+    }
+
+    async function getForecast(city) {
+
+    try {
+        const response = await fetch(`/forecast?city=${encodeURIComponent(city)}`);
+
+        if (!response.ok) {
+            throw new Error("Forecast not available");
+        }
+
+        const data = await response.json();
+
+        const container = document.getElementById("forecastContainer");
+
+        container.innerHTML = "";
+
+        data.forEach(day => {
+
+            const card = document.createElement("div");
+            card.className = "forecast-card";
+
+            let icon = "🌤️";
+const description = day.description.toLowerCase();
+
+if (description.includes("clear")) {
+    icon = "☀️";
+}
+else if (description.includes("cloud")) {
+    icon = "☁️";
+}
+else if (description.includes("rain") || description.includes("drizzle")) {
+    icon = "🌧️";
+}
+else if (description.includes("thunderstorm")) {
+    icon = "⛈️";
+}
+else if (description.includes("snow")) {
+    icon = "❄️";
+}
+else if (description.includes("mist") || description.includes("fog")) {
+    icon = "🌫️";
+}
+
+card.innerHTML = `
+    <h3 class="forecast-day">${day.date}</h3>
+
+    <div class="forecast-icon">${icon}</div>
+
+    <p class="forecast-description">${day.description}</p>
+
+    <div class="forecast-temperature">
+        <span class="max-temp">${Math.round(day.maxTemperature)}°</span>
+        <span class="min-temp">${Math.round(day.minTemperature)}°</span>
+    </div>
+
+    <p class="forecast-label">MAX / MIN</p>
+`;
+
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("Forecast error:", error);
+    }
+}
+
+
+
+
+</script>
+
+</body>
+
+</html>
