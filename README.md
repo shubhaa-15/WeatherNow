@@ -72,11 +72,3 @@ The application requires:
 WEATHER_API_KEY
 ```
 Get your API key from OpenWeatherMap.
-
-###  Developer
-
-**Shubha**
-
-B.Tech Computer Science Engineering Student
----
-Made with Java, curiosity and a little love for the weather. 
